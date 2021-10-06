@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
-import Dashboard from '@/views/dashboard/index.vue'
+import Home from '@/views/home/Index.vue'
+import Dashboard from '@/views/dashboard/Index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,13 +20,13 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/manager/login.vue')
+    component: () => import('../views/manager/Login.vue')
   },
 
   {
     path: '/manager',
     // name: '管理',
-    component: () => import('@/components/manager/index.vue'),
+    component: () => import('@/views/manager/Index.vue'),
     // redirect:'dashboard',
     children: [
       {
@@ -34,16 +34,29 @@ const routes: Array<RouteRecordRaw> = [
         name: '数据面板',
         component: Dashboard,
         meta: { title: '数据面板' }
-      }
+      },
+      {
+        path: 'publish',
+        name: '发布文章',
+        component: () => import('@/views/article/Edit.vue'),
+        meta: { title: '发布文章' }
+      },
+      {
+        path: 'edit',
+        name: '编辑文章',
+        component: () => import('@/views/article/Edit.vue'),
+        meta: { title: '编辑文章' }
+      },
+
     ]
     
   },
 
-  // {
-  //   path: '/dashboard',
-  //   name: '数据面板',
-  //   component: () => import('@/views/manager/dashboard.vue')
-  // }
+  {
+    path: '/article',
+    name: '文章',
+    component: () => import('@/views/article/Index.vue')
+  }
 
 ]
 
