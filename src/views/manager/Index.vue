@@ -20,9 +20,9 @@
 </template>
 <script lang="ts">
 import{ defineComponent,toRefs,reactive }from 'vue';
-import Sidebar from './sidebar.vue'
-import Myheader from './header.vue'
-import Logo from './logo.vue'
+import Sidebar from '@/components/manager/Sidebar.vue'
+import Myheader from '@/components/manager/Header.vue'
+import Logo from '@/components/manager/Logo.vue'
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
