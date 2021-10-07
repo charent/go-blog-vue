@@ -1,5 +1,5 @@
 <template>
-      <el-container>
+    <el-container>
         <el-aside style="transition: all .5s" :width="!isCollapse ? '200px' : '64px'">
             <Logo :isCollapse="isCollapse"/>  <!-- logo -->
             <Sidebar :isCollapse="isCollapse" />  <!-- 侧边栏 -->
@@ -15,7 +15,6 @@
         </el-main>
 
         </el-container>
-
     </el-container>
 </template>
 <script lang="ts">
@@ -55,8 +54,10 @@ export default defineComponent({
 })
 </script>
 <style scoped>
+
 .el-container{
     height:95vh;
+    /* overflow: hidden; */
 }
 .el-header{
     padding-left: 0px;

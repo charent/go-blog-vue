@@ -66,15 +66,15 @@ export default defineComponent({
               { id: "2.1", icon: 'el-icon-edit', title: '发表文章', path: '/manager/publish' },
               { id: "2.2", icon: 'el-icon-edit-outline', title: '修改文章', path: '/edit' }
             ]},
-          { id: "3", icon: 'el-icon-message-solid', title: '我的消息', path: '/message' },
-          { id: "4",  icon: 'el-icon-picture', title: '图床管理', path: '/picbed' },
-          { id: "5",  icon: 'el-icon-s-order', title: '系统日志', path: '/log' },
-          { id: "6",  icon: 'el-icon-setting', title: '设置', path: '/setting',
+          { id: "3", icon: 'el-icon-message-solid', title: '我的消息', path: '/manager/message' },
+          { id: "4",  icon: 'el-icon-picture', title: '图床管理', path: '/manager/picbed' },
+          { id: "5",  icon: 'el-icon-s-order', title: '系统日志', path: '/manager/log' },
+          { id: "6",  icon: 'el-icon-setting', title: '设置', path: '/manager/setting',
             children: [
-              { id: "6.1", icon: 'el-icon-lock', title: '修改密码', path: '/changepwd' },
-              { id: "6.2", icon: 'el-icon-user-solid', title: '修改个人信息', path: '/changeinfo' }
+              { id: "6.1", icon: 'el-icon-lock', title: '修改密码', path: '/manager/changepwd' },
+              { id: "6.2", icon: 'el-icon-user-solid', title: '修改个人信息', path: '/manager/changeinfo' }
             ]},
-          { id: "7",  icon: 'el-icon-document-copy', title: '数据备份', path: '/backup',}
+          { id: "7",  icon: 'el-icon-document-copy', title: '数据备份', path: '/manager/backup',}
         ]
       }
     },
@@ -113,6 +113,7 @@ export default defineComponent({
           return meta.activeMenu
         }
       }
+      console.log(path)
       return path
     })
 
@@ -132,7 +133,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 500px;

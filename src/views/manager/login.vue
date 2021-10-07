@@ -103,7 +103,9 @@ export default defineComponent({
          if (response.data.code == 200){
            ElMessage.success("登录成功")
             // 存储token
-          store.dispatch('login', {token: response.data.token})
+        
+          store.commit('login', {token: response.data.token})
+          
           router.push("/manager")
           return true
          }else{
