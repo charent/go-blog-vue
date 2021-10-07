@@ -27,8 +27,9 @@
 <script lang="ts">
 import{ defineComponent,watch,computed,toRefs,reactive }from 'vue';
 import router from '@/router/index'
+import store from '@/store/index'
 export default defineComponent({
-    name: "",
+    name: "Myheader",
     props:{
         isCollapse:{
             type:Boolean,
@@ -45,6 +46,7 @@ export default defineComponent({
 
         const logOut = () => {
             window.localStorage.clear()
+            store.commit('logout')
             router.push({path:'/'})
         }
         const handleLink = (item:any) => {

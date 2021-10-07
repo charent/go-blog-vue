@@ -36,7 +36,15 @@
 
                 <el-row>
                   <el-col :span="8"> <div style="text-align:center;">联系方式：<br/>(^替换为@)</div></el-col>
-                  <el-col :span="16"> <div style="text-align:center; margin-top:8px; overflow:hidden;">{{ email }}</div></el-col>
+                  <el-col :span="16"> 
+                    <div class="email">
+                      <el-scrollbar>
+                            <div class="flex-content">
+                                <p>{{ email }}</p>
+                            </div>
+                      </el-scrollbar>
+                    </div>
+                    </el-col>
                 </el-row>
                 <div class="line"><div></div></div>
 
@@ -136,7 +144,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -151,7 +159,14 @@ export default defineComponent({
   margin-right: 10px;
 
 }
-
+.email {
+  text-align:center; 
+  margin-top:8px;
+  /* overflow: hidden; */
+}
+/* .email:hover {
+  overflow: scroll;
+} */
 
 .text {
   font-size: 14px;

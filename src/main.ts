@@ -14,7 +14,7 @@ import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import '@kangc/v-md-editor/lib/style/preview.css';
 
-// highlightjs
+// highlight js
 import hljs from 'highlight.js';
 import prism from 'prismjs';
 

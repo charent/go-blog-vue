@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/home/Index.vue'
 import Dashboard from '@/views/dashboard/Index.vue'
+import store from "@/store/index"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,7 +28,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/manager',
     // name: '管理',
     component: () => import('@/views/manager/Index.vue'),
-    // redirect:'dashboard',
+ 
+    // 只有经过身份验证的用户才能进入管理页面
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'dashboard',
@@ -53,16 +56,37 @@ const routes: Array<RouteRecordRaw> = [
   },
 
   {
-    path: '/article',
+    path: '/article/:id',
     name: '文章',
-    component: () => import('@/views/article/Index.vue')
-  }
+    component: () => import('@/views/article/ArticleDetail.vue')
+  },
+
+  {
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: () => import('@/views/404NotFound.vue')
+  },
 
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from ,next) => {
+  const token = store.getters.token
+  if(!to.matched.some(record => record.meta.requiresAuth)){
+    //如果路由中没有meta的requireAuth，不验证，直接放行
+      next()
+  }else{
+      if(token){
+          next()
+      }else{
+        next({path:'/login'})
+      }
+  }
+  return
 })
 
 export default router
