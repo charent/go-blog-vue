@@ -56,7 +56,7 @@
 </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent } from "vue";
 import router from "@/router/index";
 import store from "@/store/index";
 import { ElMessage } from "element-plus";
@@ -109,7 +109,7 @@ export default defineComponent({
           router.push("/manager")
           return true
          }else{
-           ElMessage.success("登录失败")
+           ElMessage.error("登录失败")
          }
 
         })
