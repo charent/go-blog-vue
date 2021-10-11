@@ -23,14 +23,6 @@
             </el-row>
           </div>
 
-          <el-row >
-            <!-- <el-col :span="12"></el-col> -->
-            <el-col :span="24">
-              <div class='page-box'>
-                <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination> 
-              </div>
-            </el-col>
-          </el-row>
         </el-main>
       </el-container>
 
@@ -84,8 +76,5 @@ export default defineComponent({
  
 // }
 
-.page-box {
-  margin-top: 20px;
-}
 
 </style>
