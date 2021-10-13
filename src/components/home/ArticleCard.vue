@@ -56,7 +56,7 @@ export default defineComponent({
     this.$nextTick(function () {
       // 仅在整个视图都被渲染之后才会运行的代码
 
-       let data = this.$axios.get('api/home/article/0')
+       let data = this.$axios.get('/api/home/articles/0')
         .then(
           
           // 这里必须使用箭头函数，否则this=undefined
@@ -87,7 +87,7 @@ export default defineComponent({
 
     handleCurrentChange(val){
       let page = val - 1
-      let url = 'api/home/article/' + page
+      let url = '/api/home/articles/' + page
       console.log(url)
       this.$axios.get(url)
         .then(

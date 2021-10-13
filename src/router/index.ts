@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
   },
 
   {
-    path: '/article/:id',
+    path: '/article/:articleId',
     name: '文章',
     component: () => import('@/views/article/ArticleDetail.vue')
   },
@@ -66,6 +66,14 @@ const routes: Array<RouteRecordRaw> = [
     name: '404',
     component: () => import('@/views/404NotFound.vue')
   },
+ 
+  // 根据服务器返回信息决定的page not found
+  {
+    path: '/404NotFound',
+    name: '404',
+    component: () => import('@/views/404NotFound.vue')
+  },
+
 
 ]
 
