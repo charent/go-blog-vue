@@ -136,18 +136,12 @@ export default defineComponent({
     data.articles = [
        {
               "ArticleId": -1,
-              "Title": "如果你看到这个标题，说明没有获取到后端服务器的数据",
-              "Abstract": "如果你看到这个摘要，说明没有获取到后端服务器的数据，请联系管理员",
-              "PublishTime": "0",
+              "Title": "正在加载...",
+              "Abstract": "",
+              "PublishTime": "",
               "Visited": 0
           },
-          {
-              "ArticleId": -2,
-              "Title": "标题示例",
-              "Abstract": "摘要示例",
-              "PublishTime": "2021-10-11 199:16",
-              "Visited": 0
-          },
+         
     ]
 
     const handleCardClick = (path) => {
