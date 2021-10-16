@@ -1,27 +1,29 @@
 <template>
-    <div class="header-wrapper">
-        <div style="display: flex;align-items: center;">
-            <span :class="!isCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'" @click="changeIsCollapse"></span>
-            <el-breadcrumb separator-class="el-icon-arrow-right" style="display:inline-block;">
-                
-                <!-- <el-breadcrumb-item>活动管理</el-breadcrumb-item> -->
-                <!-- <el-breadcrumb-item>活动列表</el-breadcrumb-item> -->
-                <!-- <el-breadcrumb-item>活动详情</el-breadcrumb-item> -->
-            </el-breadcrumb>
+    <el-card :body-style="{ padding: '0px' }">
+        <div class="header-wrapper">
+            <div style="display: flex;align-items: center;">
+                <span :class="!isCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'" @click="changeIsCollapse"></span>
+                <el-breadcrumb separator-class="el-icon-arrow-right" style="display:inline-block;">
+                    
+                    <!-- <el-breadcrumb-item>活动管理</el-breadcrumb-item> -->
+                    <!-- <el-breadcrumb-item>活动列表</el-breadcrumb-item> -->
+                    <!-- <el-breadcrumb-item>活动详情</el-breadcrumb-item> -->
+                </el-breadcrumb>
+            </div>
+
+            <el-dropdown>
+                <el-button type="primary" plain>
+                个人中心<i class="el-icon-arrow-down el-icon--right"></i>
+                </el-button>
+                <template #dropdown>
+                    <el-dropdown-menu>
+                <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+            </template>
+            </el-dropdown>
         </div>
-
-        <el-dropdown>
-            <el-button type="primary" plain>
-            个人中心<i class="el-icon-arrow-down el-icon--right"></i>
-            </el-button>
-            <template #dropdown>
-                <el-dropdown-menu>
-               <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-        </template>
-        </el-dropdown>
-
-    </div>
+    </el-card>
+    
 </template>
 
 <script lang="ts">
@@ -65,15 +67,21 @@ export default defineComponent({
     }
 })
 </script>
-<style scoped>
+<style lang='scss' scoped>
+el-card{
+    border: 0;
+    padding: 0;
+}
+
 .header-wrapper{
     height:100%;
     width: 100%;
-    box-shadow: 8px 2px 8px rgba(32, 32, 32, 0.5);
-
     display:flex;
     justify-content: space-between;
     align-items: center;
+    .el-card {
+        width: 100%;
+    }
 }
 .el-icon-s-fold,.el-icon-s-unfold{
     cursor: pointer;
