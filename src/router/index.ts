@@ -50,6 +50,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/article/Edit.vue'),
         meta: { title: '编辑文章' }
       },
+      {
+        path: 'category',
+        name: '分类管理',
+        component: () => import('@/views/category/index.vue'),
+        meta: { title: '分类管理' }
+      },
 
     ]
     

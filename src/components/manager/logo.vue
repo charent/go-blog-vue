@@ -1,8 +1,10 @@
 <template>
-    <div class="logo-wrapper">
-        <!-- <img src="~@/assets/logo.png" alt=""> -->
-        <span v-if="!isCollapse" class="logo-text">后台管理</span>
-    </div>
+    <el-card :body-style="{ padding: '0px' }">
+        <div class="logo-wrapper">
+            <!-- <img src="~@/assets/logo.png" alt=""> -->
+            <span v-if="!isCollapse" class="logo-text">后台管理</span>
+        </div>
+    </el-card>
 </template>
 
 <script lang="ts">
@@ -20,14 +22,17 @@ export default defineComponent({
     }
 })
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.el-card {
+    margin-bottom: 5px;
+}
 .logo-wrapper{
     height:60px;
     margin:0 auto;
     display:flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(203, 214, 209, 0.685);
+    /* background-color: rgba(203, 214, 209, 0.685); */
     overflow:hidden;
 }
 .logo-wrapper img{
