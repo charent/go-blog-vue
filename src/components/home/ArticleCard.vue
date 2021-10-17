@@ -68,7 +68,7 @@ export default defineComponent({
                 this.totalPage = data.totalPage * this.page_size
                 
               }else{
-                ElMessage.error("连接服务器错误..")
+                ElMessage.error("连接服务器错误...")
               }
           }
         )
