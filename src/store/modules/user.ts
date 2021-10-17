@@ -4,19 +4,23 @@ const user = {
     // 创建基本状态
     state: {
         token: "",
-        logined: false
+        lastLoginTime: "",
+        lastLoginIp: ""
     },
 
     // 创建改变状态的方法
     mutations:{
        login (state, data){
            state.token = data.token
-           state.logined = true
+           state.lastLoginTime = data.lastLoginTime
+           state.lastLoginIp = data.lastLoginIp
+
        },
 
        logout (state){
            state.token = ""
-           state.logined = false
+           state.lastLoginTime = ""
+           state.lastLoginIp = ""
        }
     },
 

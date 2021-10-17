@@ -99,31 +99,32 @@ export default defineComponent({
         // this.login_button.disabled = true
         // console.log( this.login_button.disabled)
         this.$axios.post('api/user/login',this.loginForm)
-        .then(function(response){
-         if (response.data.code == 200){
-           ElMessage.success("登录成功")
-            // 存储token
-        
-          store.commit('login', {token: response.data.token})
+        .then( function(response) {
+          let data = response.data
+          if (data.code == 200){
+              ElMessage.success("登录成功")
+              // 存储token
           
-          router.push("/manager")
-          return true
-         }else{
-           ElMessage.error("登录失败")
-         }
+              store.commit('login', {token: data.token, lastLoginTime: data.lastLoginTime, lastLoginIp: data.lastLoginIp})
+            
+              router.push("/manager")
+            return true
+          }else{
+            ElMessage.error("登录失败")
+          }
 
-        })
-        .catch(function(err){
-          ElMessage.error("登录失败，请检查用户名和密码")
-          console.log(err);
-        });
+          })
+          .catch(function(err){
+            ElMessage.error("登录失败，请检查用户名和密码")
+            console.log(err);
+          });
+          
+        } else {
+          ElMessage.error("校验失败，请检查用户名和密码")
         
-      } else {
-        ElMessage.error("校验失败，请检查用户名和密码")
-      
+          return false
+        }
         return false
-      }
-      return false
       })
     },
 

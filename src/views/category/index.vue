@@ -8,7 +8,7 @@
                         <el-input
                             ref="categoryName"
                             placeholder="一级分类名称"
-                            name="categoryName1"
+                            name="categoryName"
                             v-model="category1.categoryName"
                             type="text"
                             auto-complete="on">
@@ -22,9 +22,9 @@
             </div>
 
             <div>
-                <el-table :data="categoryFirst" stripe style="width: 100%">
-                    <el-table-column prop="category_name" label="一级分类"  />
-                    <el-table-column prop="article_count" label="该分类下的文章数" />
+                <el-table :data="categoryFirstData" stripe style="width: 100%">
+                    <el-table-column prop="CategoryName" label="一级分类"  />
+                    <el-table-column prop="ArticleCount" label="该分类下的文章数" />
                     <el-table-column label="操作">
                         <template #default="scope">
                             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">重命名</el-button>
@@ -42,10 +42,24 @@
             <div class="create-category">
                 <el-form :inline="true" :model="category2" ref="category2"  :rules="categoryRules">
                         <el-form-item label="创建新的二级分类："></el-form-item>
+
+                        <el-form-item label="">
+                           <el-select v-model="createSecondSelectFirst" placeholder="选择一级分类">
+                                <el-option
+                                v-for="item in categoryFirstData"
+                                :key="item.CategoryName"
+                                :label="item.CategoryName"
+                                :value="item.CategoryName"
+                                >
+                                </el-option>
+                            </el-select>
+
+                        </el-form-item>
+
                         <el-form-item prop="categoryName">
                             <el-input
                                 ref="categoryName"
-                                placeholder="一级分类名称"
+                                placeholder="二级分类名称"
                                 name="categoryName"
                                 v-model="category2.categoryName"
                                 type="text"
@@ -60,10 +74,10 @@
             </div>
 
             <div>
-                <el-table :data="categorySecond" stripe style="width: 100%">
-                    <el-table-column prop="category_first" label="一级分类"  />
-                    <el-table-column prop="category_name" label="二级分类"  />
-                    <el-table-column prop="article_count" label="该分类下的文章数" />
+                <el-table :data="categorySecondData" stripe style="width: 100%">
+                    <el-table-column prop="CategoryFirstName" label="一级分类"  />
+                    <el-table-column prop="CategorySecondName" label="二级分类"  />
+                    <el-table-column prop="ArticleCount" label="该分类下的文章数" />
                     <el-table-column label="操作">
                         <template #default="scope">
                             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">重命名</el-button>
@@ -105,22 +119,26 @@
 </template>
 
 <script lang="ts">
+import { ElMessage } from "element-plus";
+import store from "@/store/index";
+
 export default {
   data() {
     return {
         // 创建一级标题对话框可见
         createConformVisiable_1: false,
         createConformVisiable_2: false,
-        categoryFirst: [
-            {category_name: 'golang', article_count: 3},
-            {category_name: 'vue', article_count: 6}
+        categoryFirstData: [
+            // {CategoryName: 'golang', ArticleCount: 3},
+            // {CategoryName: 'vue', ArticleCount: 6}
 
         ],
-        categorySecond: [
-            {category_first: 'golang', category_name: 'gin', article_count: 3},
+        categorySecondData: [
+            // {CategoryFirstName: 'golang', CategorySecondName: 'gin', ArticleCount: 3},
         ],
 
         activeName: 'first',
+        createSecondSelectFirst: '',
         categoryRules: {
             categoryName: [
             {required: true, message: '请输入分类名称', trigger: 'blur',},
@@ -132,7 +150,46 @@ export default {
 
     }
   },
+  mounted() {
+    this.$nextTick(function () {
+        // 仅在整个视图都被渲染之后才会运行的代码
+        let url = '/api/manager/category/first'
+        this.updataTableData(url, 'categoryFirst')
+         
+    })
+  },
   methods: {
+
+    updataTableData(url, categoryTable) {
+        let token = store.getters.token
+    
+        // 注意： Bearer后面有个空格
+        this.$axios.get(url,  {headers: {'Authorization': 'Bearer ' + token}})
+            .then(
+                // 这里必须使用箭头函数，否则this=undefined
+                (response) => {
+                    if (response.data.code == 200){
+                        let data = response.data
+
+                        if (categoryTable == 'categoryFirst'){
+                            this.categoryFirstData = data.category
+                            
+                        }
+                        
+                        if (categoryTable == 'categorySecond'){
+                            this.categorySecondData = data.category
+                        }
+                        
+                    }else{
+                        ElMessage.error("连接服务器错误...")
+                    }
+                }
+            )
+            .catch(function(err){
+            ElMessage.error("网络或者服务器返回数据错误")
+            console.log(err);
+            });
+    },
 
     handleCreateCategory(formName){
         this.$refs[formName].validate((valid) => {
@@ -145,7 +202,6 @@ export default {
                }
                
            }
-        
         })
     },
 
@@ -159,7 +215,15 @@ export default {
     },
 
     handleTabClick(tab, event) {
-      console.log(tab, event)
+      if (tab.paneName == 0){
+          let url = '/api/manager/category/first'
+          this.updataTableData(url, 'categoryFirst')
+      }
+       if (tab.paneName == 1){
+          let url = '/api/manager/category/second'
+          this.updataTableData(url, 'categorySecond')
+         
+      }
     },
   },
 }
