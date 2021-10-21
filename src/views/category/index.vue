@@ -96,21 +96,22 @@
 
     <!-- 确认对话框 -->
     <el-dialog v-model="createConformVisiable_1" title="确认创建" width="30%" center>
-        <span>创建一级标题：<span style="color:#E6A23C">{{category1.categoryName}}</span> </span>
+        <span>创建一级分类：<span style="color:#E6A23C">{{category1.categoryName}}</span> </span>
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="createConformVisiable_1 = false">取消</el-button>
-                <el-button type="primary" @click="createConformVisiable_1 = false">确认</el-button>
+                <el-button type="primary" @click="createCategoryFirst">确认</el-button>
             </span>
         </template>
     </el-dialog>
 
      <el-dialog v-model="createConformVisiable_2" title="确认创建" width="30%" center>
-        <span>创建二级标题：<span style="color:#E6A23C">{{category2.categoryName}}</span> </span>
+        <span>一级分类：<span> {{ createSecondSelectFirst }} </span></span><br/>
+        <span>创建二级分类：<span style="color:#E6A23C">{{category2.categoryName}}</span> </span>
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="createConformVisiable_2 = false">取消</el-button>
-                <el-button type="primary" @click="createConformVisiable_2 = false">确认</el-button>
+                <el-button type="primary" @click="createCategorySecond">确认</el-button>
             </span>
         </template>
     </el-dialog>
@@ -160,6 +161,78 @@ export default {
   },
   methods: {
 
+      createCategoryFirst() {
+        let url = '/api/manager/category/first'
+        let data = {
+            'categoryName': this.category1.categoryName
+        }
+        this.putCategory(url, data, 'first')
+
+        this.createConformVisiable_1 = false
+      },
+
+      createCategorySecond() {
+        
+        if (this.createSecondSelectFirst.length == 0){
+            ElMessage.error("请选择一级分类")
+            return
+        }
+
+        let url = '/api/manager/category/second'
+        let data = {
+            'categoryFirstName': this.createSecondSelectFirst,
+            'categorySecondName': this.category2.categoryName,
+        }
+
+
+        this.putCategory(url, data, 'second')
+
+        this.createConformVisiable_2 = false
+      },
+
+      putCategory(url, data, flg) {
+          
+        let token = store.getters.token
+        console.log(url)
+        
+        // 第一个参数为url，第二个参数为data，第三个参数为配置
+        this.$axios.put(url, data, {headers: {'Authorization': 'Bearer ' + token}})
+        .then(
+            // 这里必须使用箭头函数，否则this=undefined
+            (response) => {
+                if (response.data.code == 200){
+                    let data = response.data
+                    
+                    // 根据不同的标志更新不同的分类数组
+                    if (flg == 'first'){
+                         this.categoryFirstData.push({CategoryName: data.categoryName, ArticleCount: 0})
+                    }
+                   
+                    if (flg == 'second') {
+                        this.categorySecondData.push(
+                            {CategoryFirstName: data.categoryFirstName, CategorySecondName: data.categorySecondName, ArticleCount: 0}
+                        )
+                    }
+
+                    ElMessage.success("创建成功")
+                    
+                }
+            }
+        )
+        .catch(function(err){
+            let response = err.response.data
+            if (response.code == 400){
+                ElMessage.error("创建失败, " + response.message)
+
+            }else {
+                ElMessage.error("网络或者服务器返回数据错误, " + response.message)
+            }
+           
+        });
+
+
+      },
+
     updataTableData(url, categoryTable) {
         let token = store.getters.token
     
@@ -186,8 +259,7 @@ export default {
                 }
             )
             .catch(function(err){
-            ElMessage.error("网络或者服务器返回数据错误")
-            console.log(err);
+                ElMessage.error("网络或者服务器返回数据错误，" +  err.response.message)
             });
     },
 
