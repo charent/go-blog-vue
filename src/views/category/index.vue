@@ -142,8 +142,8 @@ export default {
         createSecondSelectFirst: '',
         categoryRules: {
             categoryName: [
-            {required: true, message: '请输入分类名称', trigger: 'blur',},
-            {min: 2, max: 16, message: '分类名长度: [2, 16]', trigger: 'blur',}
+                {required: true, message: '请输入分类名称', trigger: 'blur',},
+                {min: 2, max: 16, message: '分类名长度: [2, 16]', trigger: 'blur',}
             ],
         },
         category1: {categoryName: ''},
@@ -193,7 +193,6 @@ export default {
       putCategory(url, data, flg) {
           
         let token = store.getters.token
-        console.log(url)
         
         // 第一个参数为url，第二个参数为data，第三个参数为配置
         this.$axios.put(url, data, {headers: {'Authorization': 'Bearer ' + token}})
@@ -287,11 +286,11 @@ export default {
     },
 
     handleTabClick(tab, event) {
-      if (tab.paneName == 0){
+      if (tab.paneName == 0 && this.categoryFirstData.length == 0){
           let url = '/api/manager/category/first'
           this.updataTableData(url, 'categoryFirst')
       }
-       if (tab.paneName == 1){
+       if (tab.paneName == 1 && this.categorySecondData.length == 0){
           let url = '/api/manager/category/second'
           this.updataTableData(url, 'categorySecond')
          
