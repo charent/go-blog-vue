@@ -25,7 +25,6 @@ export default defineComponent({
     this.$nextTick(function () {
       // 仅在整个视图都被渲染之后才会运行的代码
       let url = '/api/home/article/' + this.$route.params.articleId
-      console.log(url)
       let data = this.$axios.get(url)
         .then(
           

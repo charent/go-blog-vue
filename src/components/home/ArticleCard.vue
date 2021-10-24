@@ -169,7 +169,7 @@ export default defineComponent({
 <style scoped>
 
 .article-tiny {
-    height: 180px;
+    height: 120px;
     margin-top: 10px;
 }
 

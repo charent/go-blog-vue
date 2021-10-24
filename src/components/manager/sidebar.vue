@@ -63,7 +63,7 @@ export default defineComponent({
           { id: "2", icon: 'el-icon-document',title: '文章管理', path: '/art',
             children: [
               { id: "2.1", icon: 'el-icon-edit', title: '发表文章', path: '/manager/publish' },
-              { id: "2.2", icon: 'el-icon-edit-outline', title: '修改文章', path: '/edit' },
+              { id: "2.2", icon: 'el-icon-document-copy', title: '管理文章', path: '/articleManager' },
               { id: "2.3", icon: 'el-icon-delete-solid', title: '已删除文章', path: '/deleted' }
             ]},
 
